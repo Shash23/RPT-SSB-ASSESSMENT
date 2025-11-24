@@ -1,0 +1,5 @@
+
+duckdb-rpt/*
+db/*
+ssb-data/sf1/*.tbl
+ssb-data/ssb-dbgen
