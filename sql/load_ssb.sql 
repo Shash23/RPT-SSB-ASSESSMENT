@@ -1,0 +1,91 @@
+-- sql/load_ssb.sql
+-- Creates SSB schema and loads data from pipe-delimited .tbl files.
+
+CREATE SCHEMA IF NOT EXISTS ssb;
+SET schema 'ssb';
+
+-- CUSTOMER
+CREATE TABLE IF NOT EXISTS customer (
+    C_CUSTKEY     INTEGER,
+    C_NAME        VARCHAR,
+    C_ADDRESS     VARCHAR,
+    C_CITY        VARCHAR,
+    C_NATION      VARCHAR,
+    C_REGION      VARCHAR,
+    C_PHONE       VARCHAR,
+    C_MKTSEGMENT  VARCHAR
+);
+
+-- PART
+CREATE TABLE IF NOT EXISTS part (
+    P_PARTKEY   INTEGER,
+    P_NAME      VARCHAR,
+    P_MFGR      VARCHAR,
+    P_CATEGORY  VARCHAR,
+    P_BRAND     VARCHAR,
+    P_COLOR     VARCHAR,
+    P_TYPE      VARCHAR,
+    P_SIZE      INTEGER,
+    P_CONTAINER VARCHAR
+);
+
+-- SUPPLIER
+CREATE TABLE IF NOT EXISTS supplier (
+    S_SUPPKEY INTEGER,
+    S_NAME    VARCHAR,
+    S_ADDRESS VARCHAR,
+    S_CITY    VARCHAR,
+    S_NATION  VARCHAR,
+    S_REGION  VARCHAR,
+    S_PHONE   VARCHAR
+);
+
+-- DATE
+CREATE TABLE IF NOT EXISTS date (
+    D_DATEKEY        INTEGER,
+    D_DATE           VARCHAR,
+    D_DAYOFWEEK      VARCHAR,
+    D_MONTH          VARCHAR,
+    D_YEAR           INTEGER,
+    D_YEARMONTHNUM   INTEGER,
+    D_YEARMONTH      VARCHAR,
+    D_DAYNUMINWEEK   INTEGER,
+    D_DAYNUMINMONTH  INTEGER,
+    D_DAYNUMINYEAR   INTEGER,
+    D_MONTHNUMINYEAR INTEGER,
+    D_WEEKNUMINYEAR  INTEGER,
+    D_SELLINGSEASON  VARCHAR,
+    D_LASTDAYINWEEKFL  INTEGER,
+    D_LASTDAYINMONTHFL INTEGER,
+    D_HOLIDAYFL        INTEGER,
+    D_WEEKDAYFL        INTEGER
+);
+
+-- LINEORDER
+CREATE TABLE IF NOT EXISTS lineorder (
+    LO_ORDERKEY      INTEGER,
+    LO_LINENUMBER    INTEGER,
+    LO_CUSTKEY       INTEGER,
+    LO_PARTKEY       INTEGER,
+    LO_SUPPKEY       INTEGER,
+    LO_ORDERDATE     INTEGER,
+    LO_ORDERPRIORITY VARCHAR,
+    LO_SHIPPRIORITY  INTEGER,
+    LO_QUANTITY      INTEGER,
+    LO_EXTENDEDPRICE INTEGER,
+    LO_ORDTOTALPRICE INTEGER,
+    LO_DISCOUNT      INTEGER,
+    LO_REVENUE       INTEGER,
+    LO_SUPPLYCOST    INTEGER,
+    LO_TAX           INTEGER,
+    LO_COMMITDATE    INTEGER,
+    LO_SHIPMODE      VARCHAR
+);
+
+-- Adjust the paths below if you put the files elsewhere.
+COPY customer FROM '/Users/shashwatghevde/Documents/RPT-SSB-ASSESSMENT/ssb-data/sf1/customer.tbl' (DELIMITER '|');
+COPY part FROM '/Users/shashwatghevde/Documents/RPT-SSB-ASSESSMENT/ssb-data/sf1/part.tbl' (DELIMITER '|');
+COPY supplier FROM '/Users/shashwatghevde/Documents/RPT-SSB-ASSESSMENT/ssb-data/sf1/supplier.tbl' (DELIMITER '|');
+COPY date FROM '/Users/shashwatghevde/Documents/RPT-SSB-ASSESSMENT/ssb-data/sf1/date.tbl' (DELIMITER '|');
+COPY lineorder FROM '/Users/shashwatghevde/Documents/RPT-SSB-ASSESSMENT/ssb-data/sf1/lineorder.tbl' (DELIMITER '|');
+
