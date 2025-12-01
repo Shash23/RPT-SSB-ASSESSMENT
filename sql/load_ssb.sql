@@ -82,10 +82,18 @@ CREATE TABLE IF NOT EXISTS lineorder (
     LO_SHIPMODE      VARCHAR
 );
 
--- Adjust the paths below if you put the files elsewhere.
-COPY customer FROM '/Users/shashwatghevde/Documents/RPT-SSB-ASSESSMENT/ssb-data/sf1/customer.tbl' (DELIMITER '|');
-COPY part FROM '/Users/shashwatghevde/Documents/RPT-SSB-ASSESSMENT/ssb-data/sf1/part.tbl' (DELIMITER '|');
-COPY supplier FROM '/Users/shashwatghevde/Documents/RPT-SSB-ASSESSMENT/ssb-data/sf1/supplier.tbl' (DELIMITER '|');
-COPY date FROM '/Users/shashwatghevde/Documents/RPT-SSB-ASSESSMENT/ssb-data/sf1/date.tbl' (DELIMITER '|');
-COPY lineorder FROM '/Users/shashwatghevde/Documents/RPT-SSB-ASSESSMENT/ssb-data/sf1/lineorder.tbl' (DELIMITER '|');
+-- Paths are set via environment variable PROJECT_ROOT or default to current directory
+-- On CloudLab, set PROJECT_ROOT to your project directory before running this script
+-- Example: export PROJECT_ROOT=/path/to/RPT-SSB-ASSESSMENT
+-- Then run: duckdb db/ssb.duckdb -c ".read sql/load_ssb.sql"
+
+-- Note: DuckDB COPY requires absolute paths. 
+-- If PROJECT_ROOT is not set, you'll need to manually update these paths.
+-- For CloudLab, replace PROJECT_ROOT_PLACEHOLDER with your actual project path.
+
+COPY customer FROM 'PROJECT_ROOT_PLACEHOLDER/ssb-data/sf1/customer.tbl' (DELIMITER '|');
+COPY part FROM 'PROJECT_ROOT_PLACEHOLDER/ssb-data/sf1/part.tbl' (DELIMITER '|');
+COPY supplier FROM 'PROJECT_ROOT_PLACEHOLDER/ssb-data/sf1/supplier.tbl' (DELIMITER '|');
+COPY date FROM 'PROJECT_ROOT_PLACEHOLDER/ssb-data/sf1/date.tbl' (DELIMITER '|');
+COPY lineorder FROM 'PROJECT_ROOT_PLACEHOLDER/ssb-data/sf1/lineorder.tbl' (DELIMITER '|');
 

@@ -2,8 +2,9 @@
 set -euo pipefail
 
 # Adjust these paths once you build DuckDB/RPT on CloudLab.
-BASELINE_BIN="../duckdb-baseline/build/debug/duckdb"
-RPT_BIN="../duckdb-rpt/build/debug/duckdb"
+# Note: Change 'debug' to 'Release' if you built with -DCMAKE_BUILD_TYPE=Release
+BASELINE_BIN="../duckdb-baseline/build/duckdb"
+RPT_BIN="../duckdb-rpt/rpt-src/build/duckdb"
 
 DB_PATH="../db/ssb.duckdb"
 RESULTS_DIR="../results"

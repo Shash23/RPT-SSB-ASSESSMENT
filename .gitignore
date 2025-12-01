@@ -1,5 +1,19 @@
+# macOS junk
+.DS_Store
 
-duckdb-rpt/*
+# SSB generated data
+ssb-data/sf1/*
+!ssb-data/sf1/.gitkeep
+
+# DuckDB database files
 db/*
-ssb-data/sf1/*.tbl
-ssb-data/ssb-dbgen
+!db/.gitkeep
+
+# Build directories (cmake, make)
+**/build/
+
+# Python cache
+__pycache__/
+*.pyc
+
+*.pdf
