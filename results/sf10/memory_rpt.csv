@@ -1,0 +1,82 @@
+mode,query,rep,peak_memory_bytes,peak_memory_mb,status
+rpt,q1.1,1,681443328,649.88,success
+rpt,q1.1,2,681443328,649.88,success
+rpt,q1.1,3,681312256,649.75,success
+rpt,q1.2,1,663224320,632.50,success
+rpt,q1.2,2,663093248,632.38,success
+rpt,q1.2,3,663486464,632.75,success
+rpt,q1.3,1,661782528,631.12,success
+rpt,q1.3,2,661913600,631.25,success
+rpt,q1.3,3,661913600,631.25,success
+rpt,q2.1,1,-1,-1,"error: Error: Binder Error: Referenced column ""P_BRAND1"" not found in FROM clause!
+Candidate bindings: ""part.P_BRAND""
+LINE 9:         GROUP BY D_YEAR, P_BRAND1
+                                 ^
+Command exit"
+rpt,q2.1,2,-1,-1,"error: Error: Binder Error: Referenced column ""P_BRAND1"" not found in FROM clause!
+Candidate bindings: ""part.P_BRAND""
+LINE 9:         GROUP BY D_YEAR, P_BRAND1
+                                 ^
+Command exit"
+rpt,q2.1,3,-1,-1,"error: Error: Binder Error: Referenced column ""P_BRAND1"" not found in FROM clause!
+Candidate bindings: ""part.P_BRAND""
+LINE 9:         GROUP BY D_YEAR, P_BRAND1
+                                 ^
+Command exit"
+rpt,q2.2,1,-1,-1,"error: Error: Binder Error: Referenced column ""P_BRAND1"" not found in FROM clause!
+Candidate bindings: ""part.P_BRAND""
+LINE 7:           AND P_BRAND1 BETWEEN 'MFGR#2221' AND 'MFGR#2228'
+          AND S_REGION"
+rpt,q2.2,2,-1,-1,"error: Error: Binder Error: Referenced column ""P_BRAND1"" not found in FROM clause!
+Candidate bindings: ""part.P_BRAND""
+LINE 7:           AND P_BRAND1 BETWEEN 'MFGR#2221' AND 'MFGR#2228'
+          AND S_REGION"
+rpt,q2.2,3,-1,-1,"error: Error: Binder Error: Referenced column ""P_BRAND1"" not found in FROM clause!
+Candidate bindings: ""part.P_BRAND""
+LINE 7:           AND P_BRAND1 BETWEEN 'MFGR#2221' AND 'MFGR#2228'
+          AND S_REGION"
+rpt,q2.3,1,-1,-1,"error: Error: Binder Error: Referenced column ""P_BRAND1"" not found in FROM clause!
+Candidate bindings: ""part.P_BRAND""
+LINE 7:           AND P_BRAND1 = 'MFGR#2221'
+                      ^
+Command exited with "
+rpt,q2.3,2,-1,-1,"error: Error: Binder Error: Referenced column ""P_BRAND1"" not found in FROM clause!
+Candidate bindings: ""part.P_BRAND""
+LINE 7:           AND P_BRAND1 = 'MFGR#2221'
+                      ^
+Command exited with "
+rpt,q2.3,3,-1,-1,"error: Error: Binder Error: Referenced column ""P_BRAND1"" not found in FROM clause!
+Candidate bindings: ""part.P_BRAND""
+LINE 7:           AND P_BRAND1 = 'MFGR#2221'
+                      ^
+Command exited with "
+rpt,q3.1,1,803733504,766.50,success
+rpt,q3.1,2,803733504,766.50,success
+rpt,q3.1,3,803995648,766.75,success
+rpt,q3.2,1,740032512,705.75,success
+rpt,q3.2,2,739770368,705.50,success
+rpt,q3.2,3,739115008,704.88,success
+rpt,q3.3,1,729415680,695.62,success
+rpt,q3.3,2,729153536,695.38,success
+rpt,q3.3,3,729677824,695.88,success
+rpt,q3.4,1,730726400,696.88,success
+rpt,q3.4,2,731119616,697.25,success
+rpt,q3.4,3,731119616,697.25,success
+rpt,q4.1,1,1067843584,1018.38,success
+rpt,q4.1,2,1068367872,1018.88,success
+rpt,q4.1,3,1069416448,1019.88,success
+rpt,q4.2,1,1043464192,995.12,success
+rpt,q4.2,2,1043857408,995.50,success
+rpt,q4.2,3,1044250624,995.88,success
+rpt,q4.3,1,-1,-1,"error: Error: Binder Error: Referenced column ""P_BRAND1"" not found in FROM clause!
+Candidate bindings: ""part.P_BRAND""
+LINE 13:         GROUP BY D_YEAR, S_CITY, P_BRAND1
+                                      "
+rpt,q4.3,2,-1,-1,"error: Error: Binder Error: Referenced column ""P_BRAND1"" not found in FROM clause!
+Candidate bindings: ""part.P_BRAND""
+LINE 13:         GROUP BY D_YEAR, S_CITY, P_BRAND1
+                                      "
+rpt,q4.3,3,-1,-1,"error: Error: Binder Error: Referenced column ""P_BRAND1"" not found in FROM clause!
+Candidate bindings: ""part.P_BRAND""
+LINE 13:         GROUP BY D_YEAR, S_CITY, P_BRAND1
+                                      "

@@ -1,0 +1,82 @@
+mode,query,rep,peak_memory_bytes,peak_memory_mb,status
+baseline,q1.1,1,661651456,631.00,success
+baseline,q1.1,2,660996096,630.38,success
+baseline,q1.1,3,660996096,630.38,success
+baseline,q1.2,1,661520384,630.88,success
+baseline,q1.2,2,661520384,630.88,success
+baseline,q1.2,3,661782528,631.12,success
+baseline,q1.3,1,661258240,630.62,success
+baseline,q1.3,2,660865024,630.25,success
+baseline,q1.3,3,660602880,630.00,success
+baseline,q2.1,1,-1,-1,"error: Error: Binder Error: Referenced column ""P_BRAND1"" not found in FROM clause!
+Candidate bindings: ""part.P_BRAND""
+LINE 9:         GROUP BY D_YEAR, P_BRAND1
+                                 ^
+Command exit"
+baseline,q2.1,2,-1,-1,"error: Error: Binder Error: Referenced column ""P_BRAND1"" not found in FROM clause!
+Candidate bindings: ""part.P_BRAND""
+LINE 9:         GROUP BY D_YEAR, P_BRAND1
+                                 ^
+Command exit"
+baseline,q2.1,3,-1,-1,"error: Error: Binder Error: Referenced column ""P_BRAND1"" not found in FROM clause!
+Candidate bindings: ""part.P_BRAND""
+LINE 9:         GROUP BY D_YEAR, P_BRAND1
+                                 ^
+Command exit"
+baseline,q2.2,1,-1,-1,"error: Error: Binder Error: Referenced column ""P_BRAND1"" not found in FROM clause!
+Candidate bindings: ""part.P_BRAND""
+LINE 7:           AND P_BRAND1 BETWEEN 'MFGR#2221' AND 'MFGR#2228'
+          AND S_REGION"
+baseline,q2.2,2,-1,-1,"error: Error: Binder Error: Referenced column ""P_BRAND1"" not found in FROM clause!
+Candidate bindings: ""part.P_BRAND""
+LINE 7:           AND P_BRAND1 BETWEEN 'MFGR#2221' AND 'MFGR#2228'
+          AND S_REGION"
+baseline,q2.2,3,-1,-1,"error: Error: Binder Error: Referenced column ""P_BRAND1"" not found in FROM clause!
+Candidate bindings: ""part.P_BRAND""
+LINE 7:           AND P_BRAND1 BETWEEN 'MFGR#2221' AND 'MFGR#2228'
+          AND S_REGION"
+baseline,q2.3,1,-1,-1,"error: Error: Binder Error: Referenced column ""P_BRAND1"" not found in FROM clause!
+Candidate bindings: ""part.P_BRAND""
+LINE 7:           AND P_BRAND1 = 'MFGR#2221'
+                      ^
+Command exited with "
+baseline,q2.3,2,-1,-1,"error: Error: Binder Error: Referenced column ""P_BRAND1"" not found in FROM clause!
+Candidate bindings: ""part.P_BRAND""
+LINE 7:           AND P_BRAND1 = 'MFGR#2221'
+                      ^
+Command exited with "
+baseline,q2.3,3,-1,-1,"error: Error: Binder Error: Referenced column ""P_BRAND1"" not found in FROM clause!
+Candidate bindings: ""part.P_BRAND""
+LINE 7:           AND P_BRAND1 = 'MFGR#2221'
+                      ^
+Command exited with "
+baseline,q3.1,1,738852864,704.62,success
+baseline,q3.1,2,739377152,705.12,success
+baseline,q3.1,3,739770368,705.50,success
+baseline,q3.2,1,736755712,702.62,success
+baseline,q3.2,2,736362496,702.25,success
+baseline,q3.2,3,736886784,702.75,success
+baseline,q3.3,1,731512832,697.62,success
+baseline,q3.3,2,730988544,697.12,success
+baseline,q3.3,3,731774976,697.88,success
+baseline,q3.4,1,729677824,695.88,success
+baseline,q3.4,2,730333184,696.50,success
+baseline,q3.4,3,730202112,696.38,success
+baseline,q4.1,1,1025245184,977.75,success
+baseline,q4.1,2,1026686976,979.12,success
+baseline,q4.1,3,1025638400,978.12,success
+baseline,q4.2,1,1034289152,986.38,success
+baseline,q4.2,2,1032060928,984.25,success
+baseline,q4.2,3,1033764864,985.88,success
+baseline,q4.3,1,-1,-1,"error: Error: Binder Error: Referenced column ""P_BRAND1"" not found in FROM clause!
+Candidate bindings: ""part.P_BRAND""
+LINE 13:         GROUP BY D_YEAR, S_CITY, P_BRAND1
+                                      "
+baseline,q4.3,2,-1,-1,"error: Error: Binder Error: Referenced column ""P_BRAND1"" not found in FROM clause!
+Candidate bindings: ""part.P_BRAND""
+LINE 13:         GROUP BY D_YEAR, S_CITY, P_BRAND1
+                                      "
+baseline,q4.3,3,-1,-1,"error: Error: Binder Error: Referenced column ""P_BRAND1"" not found in FROM clause!
+Candidate bindings: ""part.P_BRAND""
+LINE 13:         GROUP BY D_YEAR, S_CITY, P_BRAND1
+                                      "

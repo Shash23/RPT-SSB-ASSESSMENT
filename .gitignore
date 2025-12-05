@@ -1,19 +1,34 @@
 # macOS junk
 .DS_Store
 
-# SSB generated data
+# SSB generated data (can be regenerated)
 ssb-data/sf1/*
+ssb-data/sf5/*
+ssb-data/sf10/*
 !ssb-data/sf1/.gitkeep
+!ssb-data/sf5/.gitkeep
+!ssb-data/sf10/.gitkeep
+!ssb-data/ssb-dbgen/
 
-# DuckDB database files
+# DuckDB database files (large binary files)
 db/*
 !db/.gitkeep
+duckdb-rpt/*.db
 
 # Build directories (cmake, make)
 **/build/
+duckdb-rpt/rpt-src/build/
 
 # Python cache
 __pycache__/
 *.pyc
 
+# PDFs (large files)
 *.pdf
+
+# Cleanup backups
+.cleanup_backup_*/
+
+# Log files
+*.log
+experiment_run*.log

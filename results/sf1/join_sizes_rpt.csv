@@ -1,0 +1,17 @@
+mode,query,step,step_name,row_count
+rpt,q3.1,1,customer_filtered,64
+rpt,q3.1,2,supplier_filtered,64
+rpt,q3.1,3,date_filtered,64
+rpt,q3.1,4,lineorder_all,64
+rpt,q3.1,5,join_customer,64
+rpt,q3.1,6,join_supplier,64
+rpt,q3.1,7,join_final,64
+rpt,q4.1,1,customer_filtered,64
+rpt,q4.1,2,supplier_filtered,64
+rpt,q4.1,3,part_filtered,64
+rpt,q4.1,4,date_all,64
+rpt,q4.1,5,lineorder_all,64
+rpt,q4.1,6,join_customer,64
+rpt,q4.1,7,join_supplier,64
+rpt,q4.1,8,join_part,64
+rpt,q4.1,9,join_final,64
