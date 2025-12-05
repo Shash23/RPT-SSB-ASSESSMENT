@@ -1,194 +1,139 @@
-# RPT-SSB-ASSESSMENT
+# Evaluating Robust Predicate Transfer in DuckDB
 
-Evaluation of Robust Predicate Transfer (RPT) on the Star Schema Benchmark (SSB).
+**Purpose:** Evaluate RPT's performance and robustness on the Star Schema Benchmark (SSB) to test its effectiveness under realistic data warehouse workloads.
 
-## Project Overview
+## Objectives
 
-This project compares baseline DuckDB against RPT-enabled DuckDB on the SSB benchmark to evaluate:
-- Performance improvements from predicate transfer
-- Robustness under different join order scenarios
-- Join order sensitivity analysis
+- Compare RPT-enabled DuckDB against baseline (RPT disabled) on SSB queries
+- Measure query runtime, intermediate join sizes, and memory utilization
+- Assess RPT's robustness across different scale factors (SF=1, SF=5, SF=10)
+- Evaluate performance improvements for star-schema join patterns
 
-## Project Structure
+## Architecture
 
-```
-RPT-SSB-ASSESSMENT/
-├── duckdb-rpt/          # RPT-enabled DuckDB source (git submodule or clone)
-├── ssb-data/            # SSB benchmark data
-│   └── sf1/            # Scale factor 1 data files
-├── sql/                 # SQL scripts
-│   ├── load_ssb.sql    # Schema and data loading (uses placeholder paths)
-│   └── load_ssb.sh     # Helper script to load data with correct paths
-├── runner/              # Experiment automation
-│   ├── run_experiments.py      # Python script to run queries and log timings
-│   └── run_all_experiments.sh  # Bash script to run all experiments
-├── db/                  # DuckDB database files (gitignored)
-└── results/             # Benchmark results (gitignored)
-```
+- **Database Engine:** DuckDB v1.4.0 (RPT-enabled fork from EmbryoLabs)
+- **Benchmark:** Star Schema Benchmark (SSB)
+- **Platform:** x86_64 Linux (CloudLab EC2 instance)
+- **Join Order Strategy:** RandomLeftDeep (for robustness testing)
+- **Scale Factors:** SF=1, SF=5, SF=10
 
-## Prerequisites
+## Environment
 
-- **x86_64 Linux machine** (required for RPT compilation - uses AVX2/AVX512 intrinsics)
+- **EC2 Instance Type:** [t3.large or similar - check EC2 console]
+- **OS:** Ubuntu 22.04.5 LTS
+- **DuckDB Version:** v1.4.0 (RPT-enabled)
+- **Storage:** 29GB EBS volume, ext4 filesystem
+
+*(Full environment details available in RESULTS.md)*
+
+## Setup
+
+### Prerequisites
+
+- x86_64 Linux machine (RPT requires AVX2/AVX512 intrinsics)
 - CMake 3.20+
 - C++ compiler with C++17 support
 - Python 3.6+
 - Git
 
-**Note:** RPT cannot be compiled on ARM (M1 Mac). Use CloudLab or another x86 machine.
-
-## CloudLab Setup
-
-### 1. Get CloudLab Access
-
-1. Sign up at: https://www.cloudlab.us/signup.php?pid=NextGenDB
-2. Wait for project approval
-3. Create an experiment with an x86_64 node
-
-### 2. Clone Repository on CloudLab
+### Quick Setup
 
 ```bash
-# On your CloudLab node
-git clone <your-repo-url>
+# Clone repository
+git clone <repo-url>
 cd RPT-SSB-ASSESSMENT
-```
 
-### 3. Generate SSB Data (if not already present)
-
-```bash
-# If ssb-dbgen is not in the repo, clone and build it
-cd ssb-data
-git clone https://github.com/eyalroz/ssb-dbgen
-cd ssb-dbgen
+# Generate SSB data (if not present)
+cd ssb-data/ssb-dbgen
 mkdir build && cd build
-cmake ..
-make -j$(nproc)
+cmake .. && make -j$(nproc)
+./dbgen -s 5  # Generate SF=5 data
+./dbgen -s 10 # Generate SF=10 data
+mv *.tbl ../../sf5/ && mv *.tbl ../../sf10/
 
-# Generate SF=1 data
-./dbgen -s 1
-
-# Move data files to sf1 directory
-mv *.tbl ../../sf1/
-cd ../../..
-```
-
-### 4. Build Baseline DuckDB
-
-```bash
-# Clone baseline DuckDB (or use your baseline version)
-cd ..
-git clone https://github.com/duckdb/duckdb.git duckdb-baseline
-cd duckdb-baseline
-mkdir build && cd build
-cmake .. -DCMAKE_BUILD_TYPE=Release
-make -j$(nproc)
-cd ../..
-```
-
-### 5. Build RPT-Enabled DuckDB
-
-```bash
-# If duckdb-rpt is a submodule or separate clone
-cd duckdb-rpt/rpt-src  # or wherever your RPT DuckDB source is
-
-# Enable RPT by editing the setting file
-# Edit: src/include/duckdb/optimizer/predicate_transfer/setting.hpp
-# Uncomment: #define PredicateTransfer
-# Leave BloomJoin and SmalltoLarge commented for true RPT
-
-# Build
+# Build DuckDB with RPT
+cd ../../../duckdb-rpt/rpt-src
 mkdir -p build && cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release
 make -j$(nproc)
+
+# Load SSB data
 cd ../../..
+duckdb duckdb-rpt/ssb_sf5.db < sql/load_ssb.sql
 ```
 
-### 6. Load SSB Data
+## How to Run
 
-```bash
-# Use the helper script (automatically detects project root)
-./sql/load_ssb.sh
-
-# Or manually with duckdb CLI
-# First, update PROJECT_ROOT_PLACEHOLDER in sql/load_ssb.sql with your path
-# Then:
-duckdb db/ssb.duckdb < sql/load_ssb.sql
-```
-
-### 7. Run Experiments
+### Run Full Experiment Suite
 
 ```bash
 cd runner
-
-# Update paths in run_all_experiments.sh to point to your DuckDB binaries
-# Then run:
-./run_all_experiments.sh
-
-# Results will be in ../results/
+./run_all_scale_factors.sh
 ```
 
-## Local Development (macOS)
+This script will:
+1. Configure DuckDB for RPT and baseline modes
+2. Rebuild DuckDB for each configuration
+3. Run all SSB queries for SF=5 and SF=10
+4. Measure join sizes and memory utilization
+5. Generate comparison graphs
 
-You can prepare scripts and test data generation locally, but **cannot build RPT DuckDB** on ARM.
-
-### Local Setup
+### Run Individual Experiments
 
 ```bash
-# Generate SSB data
-cd ssb-data
-git clone https://github.com/eyalroz/ssb-dbgen
-cd ssb-dbgen
-mkdir build && cd build
-cmake ..
-make -j4
-./dbgen -s 1
-mv *.tbl ../../sf1/
-cd ../../..
+# Run experiments for a specific scale factor
+cd runner
+./run_all_experiments.sh
 
-# Load data (requires regular DuckDB installed)
-./sql/load_ssb.sh
+# Generate graphs
+python3 create_graphs_for_scale_factor.py 5
+python3 create_graphs_for_scale_factor.py 10
 ```
 
-## Experiment Workflow
+### View Results
 
-1. **Build both DuckDB versions** (baseline and RPT) on CloudLab
-2. **Load SSB data** using `sql/load_ssb.sh`
-3. **Run experiments** using `runner/run_all_experiments.sh`
-4. **Analyze results** from `results/` directory
-5. **Generate graphs and paper**
+- **CSV Results:** `results/sf5/`, `results/sf10/`
+- **Graphs:** `results/graphs/sf5/`, `results/graphs/sf10/`
 
-## Results Format
+## Results Summary
 
-Results are saved as CSV files with columns:
-- `mode`: "baseline" or "rpt"
-- `query`: Query name (e.g., "q1.1", "q2.1")
-- `rep`: Repetition number
-- `time_seconds`: Execution time in seconds
+### SF=5 Results
+- **Average Speedup:** 1.34x (25.4% faster)
+- All 13 queries improved with RPT
+- Best improvement: q4.1 at +42%
 
-## Troubleshooting
+### SF=10 Results
+- **Average Speedup:** 1.35x (26.0% faster)
+- All 13 queries improved with RPT
+- Best improvement: q4.1 at +45.9%
 
-### Path Issues
-- If `load_ssb.sh` fails, ensure you're running from the project root
-- DuckDB COPY requires absolute paths - the helper script handles this
+### Key Findings
+- RPT shows significant improvements at SF=5 and SF=10 (no improvement at SF=1)
+- Benefits are consistent across scale factors (~25-26% average speedup)
+- Multi-join queries (q2.x, q4.x) show the largest improvements (22-46% faster)
+- Small memory overhead (~2% increase) for substantial performance gains
 
-### Build Issues
-- RPT requires x86_64 - cannot build on ARM
-- Ensure AVX2/AVX512 support is available on your CloudLab node
-- Check that `PredicateTransfer` is defined in the setting.hpp file
+## Project Structure
 
-### Data Loading Issues
-- Ensure `.tbl` files exist in `ssb-data/sf1/`
-- Check file permissions
-- Verify DuckDB binary path is correct
+```
+RPT-SSB-ASSESSMENT/
+├── runner/              # Experiment execution scripts
+├── scripts/             # Utility scripts
+├── sql/                 # SQL loading scripts
+├── results/             # Experiment results (CSV + graphs)
+│   ├── sf5/            # SF=5 results
+│   ├── sf10/           # SF=10 results
+│   └── graphs/         # Visualization graphs
+└── duckdb-rpt/         # RPT-enabled DuckDB source
+```
 
-## Git Workflow
+## Documentation
 
-- **Main branch**: Stable, production-ready code
-- **Working branch**: Development (e.g., `shashwat`)
-
-Large files (data, databases) are gitignored. Only code and scripts are tracked.
+- `EXPERIMENT_GUIDE.md` - Detailed experiment execution guide
+- `SCALING_UP_GUIDE.md` - Guide for generating higher scale factors
+- `REPOSITORY_STRUCTURE.md` - Complete repository structure documentation
 
 ## References
 
-- Original RPT paper: `pt.pdf`
-- Project proposal: `wisc-cs764-f25-paper22.pdf`
-- Report template: `report.pdf`
+- Original RPT Paper: [Debunking the Myth of Join Ordering: Toward Robust SQL Analytics](https://pages.cs.wisc.edu/~yxy/cs764-f25/papers/rpt.pdf)
+- Project Proposal: `wisc-cs764-f25-paper22.pdf`
