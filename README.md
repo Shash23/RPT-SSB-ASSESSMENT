@@ -47,9 +47,8 @@ cd RPT-SSB-ASSESSMENT
 cd ssb-data/ssb-dbgen
 mkdir build && cd build
 cmake .. && make -j$(nproc)
-./dbgen -s 5  # Generate SF=5 data
-./dbgen -s 10 # Generate SF=10 data
-mv *.tbl ../../sf5/ && mv *.tbl ../../sf10/
+./dbgen -s 5 && mv *.tbl ../../sf5/  # Generate SF=5 data and move immediately
+./dbgen -s 10 && mv *.tbl ../../sf10/ # Generate SF=10 data and move immediately
 
 # Build DuckDB with RPT
 cd ../../../duckdb-rpt/rpt-src
